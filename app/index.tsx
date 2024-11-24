@@ -2,6 +2,7 @@ import { View, TouchableOpacity, Text, StatusBar } from "react-native";
 import { useState } from "react";
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { router } from 'expo-router';
+import { useTheme } from '../context/ThemeContext';
 
 // Tema warna untuk aplikasi
 const colors = {
@@ -34,13 +35,13 @@ const colors = {
 };
 
 export default function Index() {
-  const [isDarkMode, setIsDarkMode] = useState(true);
   const [currentNumber, setCurrentNumber] = useState("0");
   const [previousNumber, setPreviousNumber] = useState("");
   const [operation, setOperation] = useState("");
   const [showResult, setShowResult] = useState(false);
   const [displayFormula, setDisplayFormula] = useState("");
   const [inputNumber, setInputNumber] = useState("");
+  const { isDarkMode, toggleTheme } = useTheme();
 
   // Mendapatkan warna berdasarkan tema
   const theme = isDarkMode ? colors.dark : colors.light;
@@ -286,7 +287,7 @@ export default function Index() {
           justifyContent: 'center',
         }}>
           <TouchableOpacity 
-            onPress={() => setIsDarkMode(true)}
+            onPress={() => toggleTheme()}
             style={{
               opacity: isDarkMode ? 1 : 0.5
             }}
@@ -298,7 +299,7 @@ export default function Index() {
             />
           </TouchableOpacity>
           <TouchableOpacity 
-            onPress={() => setIsDarkMode(false)}
+            onPress={() => toggleTheme()}
             style={{
               opacity: isDarkMode ? 0.5 : 1
             }}

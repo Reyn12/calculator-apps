@@ -2,6 +2,7 @@ import { View, Text, TouchableOpacity, Image, ScrollView, Platform } from 'react
 import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useTheme } from '../context/ThemeContext';
 
 // Menggunakan warna yang sama dengan index.tsx
 const colors = {
@@ -11,6 +12,13 @@ const colors = {
     button: '#313131',
     text: '#fff',
     textSecondary: '#b0b0b0'
+  },
+  light: {
+    background: '#ffffff',
+    surface: '#f5f5f5',
+    button: '#f0f0f0',
+    text: '#000000',
+    textSecondary: '#666666'
   }
 };
 
@@ -38,10 +46,16 @@ const menuItems = [
 ];
 
 export default function Profile() {
+  // Mengambil theme state dari context
+  const { isDarkMode } = useTheme();
+  
+  // Mendapatkan warna berdasarkan tema
+  const theme = isDarkMode ? colors.dark : colors.light;
+
   return (
     <View style={{
       flex: 1,
-      backgroundColor: colors.dark.background,
+      backgroundColor: theme.background,
     }}>
       <ScrollView 
         showsVerticalScrollIndicator={false}
@@ -51,7 +65,7 @@ export default function Profile() {
       >
         {/* Profile Card */}
         <View style={{
-          backgroundColor: colors.dark.surface,
+          backgroundColor: theme.surface,
           borderRadius: 20,
           marginHorizontal: 20,
           marginTop: 60,
@@ -74,7 +88,10 @@ export default function Profile() {
             />
             {/* Shadow Gradient Overlay */}
             <LinearGradient
-              colors={['transparent', 'rgba(15, 14, 46, 0.8)', colors.dark.surface]}
+              colors={isDarkMode 
+                ? ['transparent', 'rgba(15, 14, 46, 0.8)', theme.surface]
+                : ['transparent', 'rgba(245, 245, 245, 0.8)', theme.surface]
+              }
               style={{
                 position: 'absolute',
                 bottom: 0,
@@ -99,10 +116,10 @@ export default function Profile() {
               width: 100,
               height: 100,
               borderRadius: 50,
-              backgroundColor: colors.dark.button,
+              backgroundColor: theme.button,
               overflow: 'hidden',
               borderWidth: 4,
-              borderColor: colors.dark.surface,
+              borderColor: theme.surface,
             }}>
               <Image 
                 source={require('./images/profile.jpg')}
@@ -116,13 +133,13 @@ export default function Profile() {
 
             {/* User Info */}
             <Text style={{
-              color: colors.dark.textSecondary,
+              color: theme.textSecondary,
               fontSize: 16,
             }}>
               @muhreyy12_
             </Text>
             <Text style={{
-              color: colors.dark.text,
+              color: theme.text,
               fontSize: 24,
               fontWeight: 'bold',
               marginBottom: 5,
@@ -130,7 +147,7 @@ export default function Profile() {
               Muh Renaldi Maulana
             </Text>
             <Text style={{
-              color: colors.dark.textSecondary,
+              color: theme.textSecondary,
               fontSize: 16,
               marginBottom: 15,
             }}>
@@ -145,7 +162,7 @@ export default function Profile() {
               {/* Follow Button */}
               <TouchableOpacity
                 style={{
-                  backgroundColor: colors.dark.button,
+                  backgroundColor: theme.button,
                   paddingHorizontal: 16,
                   paddingVertical: 10,
                   borderRadius: 15,
@@ -157,7 +174,7 @@ export default function Profile() {
                     width: 0,
                     height: 2,
                   },
-                  shadowOpacity: 0.25,
+                  shadowOpacity: isDarkMode ? 0.25 : 0.15,
                   shadowRadius: 3.84,
                   elevation: 5,
                 }}
@@ -165,10 +182,10 @@ export default function Profile() {
                 <Ionicons 
                   name="person-add-outline"
                   size={20}
-                  color={colors.dark.text}
+                  color={theme.text}
                 />
                 <Text style={{
-                  color: colors.dark.text,
+                  color: theme.text,
                   fontSize: 14,
                   fontWeight: '500',
                 }}>
@@ -179,7 +196,7 @@ export default function Profile() {
               {/* Message Button */}
               <TouchableOpacity
                 style={{
-                  backgroundColor: colors.dark.button,
+                  backgroundColor: theme.button,
                   paddingHorizontal: 16,
                   paddingVertical: 10,
                   borderRadius: 15,
@@ -191,7 +208,7 @@ export default function Profile() {
                     width: 0,
                     height: 2,
                   },
-                  shadowOpacity: 0.25,
+                  shadowOpacity: isDarkMode ? 0.25 : 0.15,
                   shadowRadius: 3.84,
                   elevation: 5,
                 }}
@@ -199,10 +216,10 @@ export default function Profile() {
                 <Ionicons 
                   name="chatbubble-outline"
                   size={20}
-                  color={colors.dark.text}
+                  color={theme.text}
                 />
                 <Text style={{
-                  color: colors.dark.text,
+                  color: theme.text,
                   fontSize: 14,
                   fontWeight: '500',
                 }}>
@@ -213,7 +230,7 @@ export default function Profile() {
               {/* More Button */}
               <TouchableOpacity
                 style={{
-                  backgroundColor: colors.dark.button,
+                  backgroundColor: theme.button,
                   paddingHorizontal: 16,
                   paddingVertical: 10,
                   borderRadius: 15,
@@ -225,7 +242,7 @@ export default function Profile() {
                     width: 0,
                     height: 2,
                   },
-                  shadowOpacity: 0.25,
+                  shadowOpacity: isDarkMode ? 0.25 : 0.15,
                   shadowRadius: 3.84,
                   elevation: 5,
                 }}
@@ -233,10 +250,10 @@ export default function Profile() {
                 <Ionicons 
                   name="ellipsis-horizontal"
                   size={20}
-                  color={colors.dark.text}
+                  color={theme.text}
                 />
                 <Text style={{
-                  color: colors.dark.text,
+                  color: theme.text,
                   fontSize: 14,
                   fontWeight: '500',
                 }}>
@@ -246,7 +263,7 @@ export default function Profile() {
             </View>
 
             <Text style={{
-              color: colors.dark.textSecondary,
+              color: theme.textSecondary,
               fontSize: 16,
               marginHorizontal: 20,
               marginTop: 20,
@@ -258,7 +275,7 @@ export default function Profile() {
 
         {/* Menu Items */}
         <View style={{
-          backgroundColor: colors.dark.surface,
+          backgroundColor: theme.surface,
           borderRadius: 20,
           overflow: 'hidden',
           marginHorizontal: 20,
@@ -271,14 +288,14 @@ export default function Profile() {
                 alignItems: 'center',
                 padding: 20,
                 borderBottomWidth: index < menuItems.length - 1 ? 1 : 0,
-                borderBottomColor: colors.dark.button,
+                borderBottomColor: theme.button,
               }}
             >
               <View style={{
                 width: 40,
                 height: 40,
                 borderRadius: 20,
-                backgroundColor: colors.dark.button,
+                backgroundColor: theme.button,
                 justifyContent: 'center',
                 alignItems: 'center',
                 marginRight: 15,
@@ -286,12 +303,12 @@ export default function Profile() {
                 <Ionicons 
                   name={item.icon}
                   size={24}
-                  color={colors.dark.text}
+                  color={theme.text}
                 />
               </View>
               <View style={{ flex: 1 }}>
                 <Text style={{
-                  color: colors.dark.text,
+                  color: theme.text,
                   fontSize: 16,
                   fontWeight: '500',
                   marginBottom: 4,
@@ -299,7 +316,7 @@ export default function Profile() {
                   {item.title}
                 </Text>
                 <Text style={{
-                  color: colors.dark.textSecondary,
+                  color: theme.textSecondary,
                   fontSize: 14,
                 }}>
                   {item.subtitle}
@@ -308,7 +325,7 @@ export default function Profile() {
               <Ionicons 
                 name="chevron-forward"
                 size={24}
-                color={colors.dark.textSecondary}
+                color={theme.textSecondary}
               />
             </TouchableOpacity>
           ))}
@@ -322,7 +339,7 @@ export default function Profile() {
           position: 'absolute',
           top: 75,
           left: 35,
-          backgroundColor: colors.dark.button,
+          backgroundColor: theme.button,
           padding: 10,
           borderRadius: 20,
           width: 44,
@@ -335,7 +352,7 @@ export default function Profile() {
         <Ionicons 
           name="arrow-back"
           size={24} 
-          color={colors.dark.text}
+          color={theme.text}
         />
       </TouchableOpacity>
     </View>
